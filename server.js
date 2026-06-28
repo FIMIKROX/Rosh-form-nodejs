@@ -102,21 +102,6 @@ app.get("/admin/logout", (req, res) => {
   res.json({ success: true })
 })
 
-// TEMP ROUTE - Admin banane ke liye. Ek baar use karke DELETE kar dena
-app.get("/create-admin", async (req, res) => {
-  try {
-    const adminExists = await Admin.findOne({ username: 'admin' })
-    if (adminExists) return res.send('Admin already exists. Route delete kar de.')
-    
-    const hashedPass = await bcrypt.hash(process.env.ADMIN_PASS, 10)
-    const admin = new Admin({ username: 'admin', password: hashedPass })
-    await admin.save()
-    res.send('Admin ban gaya. Username: admin. Ab ye /create-admin route code se delete kar de.')
-  } catch (err) {
-    res.send('Error: ' + err.message)
-  }
-})
-
 // Form Submit
 app.post("/submit", async (req, res) => {
   try {
